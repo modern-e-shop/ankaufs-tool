@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import Header from "./components/Header";
 import Stepper from "./components/Stepper";
@@ -8,8 +9,13 @@ import CartStep from "./components/CartStep";
 import PaymentStep from "./components/PaymentStep";
 import ConfirmationStep from "./components/ConfirmationStep";
 import { useAppStore } from "./store/useStore";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
+import AdminProducts from "./pages/admin/AdminProducts";
 
-export default function App() {
+function PublicPortal() {
   const store = useAppStore();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -57,7 +63,6 @@ export default function App() {
 
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-      {/* Show stepper for steps 2-4 (not on step 1 product selection, not on step 5 confirmation which has its own) */}
       {store.step >= 2 && store.step <= 3 && <Stepper current={store.step} />}
 
       {store.step === 1 && (
@@ -109,5 +114,24 @@ export default function App() {
         />
       )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public Portal */}
+        <Route path="/" element={<PublicPortal />} />
+
+        {/* Admin Dashboard */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id" element={<AdminOrderDetail />} />
+          <Route path="products" element={<AdminProducts />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
