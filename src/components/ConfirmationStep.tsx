@@ -1,10 +1,9 @@
 import { CheckCircle, RotateCcw } from "lucide-react";
-import type { Product } from "../data/catalog";
-import type { PaymentInfo } from "../store/useStore";
+import type { CartItem, PaymentInfo } from "../store/useStore";
 import Stepper from "./Stepper";
 
 interface Props {
-  cart: Product[];
+  cart: CartItem[];
   total: number;
   payment: PaymentInfo;
   orderId: string;

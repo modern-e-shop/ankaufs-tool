@@ -1,9 +1,10 @@
 import { X, ArrowLeft, ArrowRight } from "lucide-react";
-import type { Product } from "../data/catalog";
+import { formatPrice } from "../data/catalog";
+import type { CartItem } from "../store/useStore";
 import Stepper from "./Stepper";
 
 interface Props {
-  cart: Product[];
+  cart: CartItem[];
   total: number;
   removeFromCart: (id: string) => void;
   onBack: () => void;
@@ -12,6 +13,7 @@ interface Props {
 
 export default function CartStep({
   cart,
+  total,
   removeFromCart,
   onBack,
   onNext,
@@ -20,14 +22,25 @@ export default function CartStep({
     <div className="max-w-2xl mx-auto animate-in">
       <Stepper current={2} />
       <div className="glass-card p-8">
-        <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-heading)' }}>Warenkorb</h2>
+        <h2
+          className="text-2xl font-bold mb-6"
+          style={{ color: "var(--text-heading)" }}
+        >
+          Warenkorb
+        </h2>
         {cart.length === 0 ? (
-          <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>
+          <p
+            className="text-center py-8"
+            style={{ color: "var(--text-muted)" }}
+          >
             Keine Produkte im Warenkorb.
           </p>
         ) : (
           <>
-            <p className="text-sm mb-4 font-medium" style={{ color: 'var(--text-secondary)' }}>
+            <p
+              className="text-sm mb-4 font-medium"
+              style={{ color: "var(--text-secondary)" }}
+            >
               {cart.length} Produkt{cart.length !== 1 ? "e" : ""} ausgewählt
             </p>
             <div className="space-y-3 mb-6">
@@ -36,17 +49,51 @@ export default function CartStep({
                   key={item.id}
                   className="flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-200"
                   style={{
-                    background: 'var(--input-bg)',
-                    border: '1px solid var(--border-color-light)',
+                    background: "var(--input-bg)",
+                    border: "1px solid var(--border-color-light)",
                   }}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <span className="text-xl">
-                      {item.id.startsWith("sky") ? "🎮" : "📷"}
-                    </span>
-                    <span className="font-medium truncate" style={{ color: 'var(--text-heading)' }}>
-                      {item.name}
-                    </span>
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span className="text-xl">
+                        {item.id.startsWith("sky") ? "🎮" : "📷"}
+                      </span>
+                    )}
+                    <div className="min-w-0">
+                      <span
+                        className="font-medium truncate block"
+                        style={{ color: "var(--text-heading)" }}
+                      >
+                        {item.name}
+                        {item.condition === "teil_abgebrochen" && (
+                          <span className="text-amber-400 font-normal">
+                            {" "}
+                            — Teil abgebrochen
+                          </span>
+                        )}
+                      </span>
+                      <span
+                        className="text-sm"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        {formatPrice(item.adjustedPrice)}
+                        {item.condition === "teil_abgebrochen" && (
+                          <span
+                            className="line-through ml-2"
+                            style={{ color: "var(--text-muted)" }}
+                          >
+                            {formatPrice(item.price)}
+                          </span>
+                        )}
+                      </span>
+                    </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <button
@@ -58,6 +105,26 @@ export default function CartStep({
                   </div>
                 </div>
               ))}
+            </div>
+            {/* Total */}
+            <div
+              className="flex justify-between items-center py-3 px-4 rounded-xl mb-6"
+              style={{
+                background: "var(--input-bg)",
+                border: "1px solid var(--border-color)",
+              }}
+            >
+              <span
+                className="font-semibold"
+                style={{ color: "var(--text-heading)" }}
+              >
+                Gesamt-Auszahlung
+              </span>
+              <span
+                className="font-bold text-lg text-emerald-400"
+              >
+                {formatPrice(total)}
+              </span>
             </div>
           </>
         )}
