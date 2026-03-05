@@ -49,13 +49,12 @@ function PublicPortal() {
   return (
     <div className="min-h-screen px-4 md:px-8 pb-24 max-w-7xl mx-auto">
       <Toaster
-        theme="dark"
         position="top-center"
         toastOptions={{
           style: {
-            background: "rgba(17, 17, 40, 0.9)",
-            border: "1px solid rgba(99, 102, 241, 0.3)",
-            color: "#e2e8f0",
+            background: "var(--toast-bg)",
+            border: "1px solid var(--toast-border)",
+            color: "var(--text-primary)",
             backdropFilter: "blur(12px)",
           },
         }}

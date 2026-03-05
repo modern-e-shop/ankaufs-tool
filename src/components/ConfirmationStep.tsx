@@ -1,6 +1,5 @@
 import { CheckCircle, RotateCcw } from "lucide-react";
 import type { Product } from "../data/catalog";
-import { formatPrice } from "../data/catalog";
 import type { PaymentInfo } from "../store/useStore";
 import Stepper from "./Stepper";
 
@@ -14,7 +13,6 @@ interface Props {
 
 export default function ConfirmationStep({
   cart,
-  total,
   payment,
   orderId,
   onReset,
@@ -28,45 +26,43 @@ export default function ConfirmationStep({
           <CheckCircle className="w-20 h-20 text-emerald-400 mx-auto" />
         </div>
 
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-heading)' }}>
           Anfrage eingereicht!
         </h2>
-        <p className="text-slate-400 mb-1">
+        <p className="mb-1" style={{ color: 'var(--text-secondary)' }}>
           Wir melden uns innerhalb von 24 Stunden bei Ihnen.
         </p>
-        <p className="text-sm text-slate-500 mb-8">
+        <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
           Vorgangsnummer:{" "}
-          <span className="font-mono text-indigo-400 font-bold">{orderId}</span>
+          <span className="text-indigo-400 font-bold">{orderId}</span>
         </p>
 
         {/* Summary */}
         <div className="text-left glass-card-sm p-6 mb-6">
-          <h3 className="text-white font-semibold mb-4">Zusammenfassung</h3>
+          <h3 className="font-semibold mb-4" style={{ color: 'var(--text-heading)' }}>Zusammenfassung</h3>
           <div className="space-y-2 mb-4">
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between text-sm py-1.5"
+                className="text-sm py-1.5"
               >
-                <span className="text-slate-300">{item.name}</span>
-                <span className="price">{formatPrice(item.price)}</span>
+                <span style={{ color: 'var(--text-primary)' }}>{item.name}</span>
               </div>
             ))}
           </div>
-          <div className="border-t border-slate-700/50 pt-3 flex justify-between">
-            <span className="text-white font-semibold">Gesamtbetrag</span>
-            <span className="price text-xl">{formatPrice(total)}</span>
-          </div>
-          <div className="mt-4 pt-3 border-t border-slate-700/50 text-sm text-slate-400">
+          <div className="pt-3 text-sm" style={{ borderTop: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+            <p className="mb-1">
+              {cart.length} Produkt{cart.length !== 1 ? "e" : ""} eingereicht
+            </p>
             <p>
               Zahlungsmethode:{" "}
-              <span className="text-slate-200">
+              <span style={{ color: 'var(--text-primary)' }}>
                 {payment.method === "bank" ? "Banküberweisung" : "PayPal"}
               </span>
             </p>
             <p>
               Kontakt:{" "}
-              <span className="text-slate-200">
+              <span style={{ color: 'var(--text-primary)' }}>
                 {payment.sellerName} ({payment.sellerEmail})
               </span>
             </p>

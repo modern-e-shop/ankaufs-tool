@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Check, ShoppingCart } from "lucide-react";
-import { CATALOG, formatPrice, getAllProducts } from "../data/catalog";
+import { CATALOG, getAllProducts } from "../data/catalog";
 import type { Product } from "../data/catalog";
 
 interface Props {
@@ -17,7 +17,6 @@ export default function ProductSelection({
   cart,
   toggleProduct,
   isInCart,
-  total,
   onNext,
 }: Props) {
   const [activeCategory, setActiveCategory] = useState<string>(
@@ -70,7 +69,7 @@ export default function ProductSelection({
                   }`}
                 >
                   <span className="text-3xl">{cat.icon}</span>
-                  <span className="font-semibold text-white">{cat.name}</span>
+                  <span className="font-semibold" style={{ color: 'var(--text-heading)' }}>{cat.name}</span>
                 </button>
               ))}
             </div>
@@ -91,7 +90,7 @@ export default function ProductSelection({
         )}
 
         {isSearching && (
-          <p className="text-slate-400 mb-4 text-sm">
+          <p className="mb-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
             {filteredProducts.length} Ergebnis
             {filteredProducts.length !== 1 ? "se" : ""} für „{searchQuery}"
           </p>
@@ -113,7 +112,7 @@ export default function ProductSelection({
                 style={{ animationDelay: `${i * 30}ms` }}
               >
                 {/* Placeholder icon area */}
-                <div className="w-full aspect-square rounded-lg bg-slate-800/50 flex items-center justify-center mb-3 relative overflow-hidden">
+                <div className="w-full aspect-square rounded-lg flex items-center justify-center mb-3 relative overflow-hidden" style={{ background: 'var(--input-bg)' }}>
                   <span className="text-4xl opacity-30">
                     {product.id.startsWith("sky") ? "🎮" : "📷"}
                   </span>
@@ -123,17 +122,16 @@ export default function ProductSelection({
                     </div>
                   )}
                 </div>
-                <p className="font-medium text-white text-sm truncate">
+                <p className="font-medium text-sm truncate" style={{ color: 'var(--text-heading)' }}>
                   {product.name}
                 </p>
-                <p className="price text-sm mt-1">{formatPrice(product.price)}</p>
               </button>
             );
           })}
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-16 text-slate-500">
+          <div className="text-center py-16" style={{ color: 'var(--text-muted)' }}>
             Keine Produkte gefunden.
           </div>
         )}
@@ -144,7 +142,6 @@ export default function ProductSelection({
         <div className="glass-card p-6 sticky top-6">
           <SidebarContent
             cart={cart}
-            total={total}
             onNext={onNext}
             toggleProduct={toggleProduct}
           />
@@ -172,7 +169,6 @@ export default function ProductSelection({
           <div className="glass-card p-6">
             <SidebarContent
               cart={cart}
-              total={total}
               onNext={onNext}
               toggleProduct={toggleProduct}
             />
@@ -185,46 +181,44 @@ export default function ProductSelection({
 
 function SidebarContent({
   cart,
-  total,
   onNext,
 }: {
   cart: Product[];
-  total: number;
   onNext: () => void;
   toggleProduct: (p: Product) => void;
 }) {
   return (
     <>
-      <h3 className="font-semibold text-white text-lg mb-4 flex items-center gap-2">
+      <h3 className="font-semibold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
         <ShoppingCart className="w-5 h-5 text-indigo-400" />
         Ausgewählte Produkte
       </h3>
       {cart.length === 0 ? (
-        <p className="text-slate-500 text-sm py-8 text-center">
+        <p className="text-sm py-8 text-center" style={{ color: 'var(--text-muted)' }}>
           Noch keine Produkte ausgewählt
         </p>
       ) : (
         <>
+          <p className="text-sm mb-4 font-medium" style={{ color: 'var(--text-secondary)' }}>
+            {cart.length} Produkt{cart.length !== 1 ? "e" : ""} ausgewählt
+          </p>
           <div className="space-y-2 max-h-80 overflow-y-auto mb-4">
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between py-2 px-3 rounded-lg bg-slate-800/30"
+                className="flex items-center py-2 px-3 rounded-lg"
+                style={{ background: 'var(--input-bg)' }}
               >
-                <span className="text-sm text-slate-200 truncate flex-1 mr-2">
+                <span className="text-sm truncate flex-1" style={{ color: 'var(--text-primary)' }}>
                   {item.name}
-                </span>
-                <span className="price text-sm whitespace-nowrap">
-                  {formatPrice(item.price)}
                 </span>
               </div>
             ))}
           </div>
-          <div className="border-t border-slate-700/50 pt-4 mt-4">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-slate-300 font-medium">Gesamt</span>
-              <span className="price text-2xl">{formatPrice(total)}</span>
-            </div>
+          <div className="pt-4 mt-4" style={{ borderTop: '1px solid var(--border-color)' }}>
+            <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+              Auszahlung nach Eingang und Prüfung
+            </p>
             <button onClick={onNext} className="btn-primary w-full">
               Weiter zum Warenkorb
             </button>

@@ -16,10 +16,10 @@ export default function ConditionStep({
   return (
     <div className="max-w-2xl mx-auto animate-in">
       <div className="glass-card p-8">
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-heading)' }}>
           Zustandsbeschreibung
         </h2>
-        <p className="text-slate-400 mb-6 text-sm">
+        <p className="mb-6 text-sm" style={{ color: 'var(--text-secondary)' }}>
           Optional — beschreiben Sie den Zustand Ihrer Produkte.
         </p>
         <textarea
@@ -27,7 +27,12 @@ export default function ConditionStep({
           onChange={(e) => setCondition(e.target.value)}
           rows={5}
           placeholder="z.B. leichte Kratzer, Originalverpackung vorhanden, voll funktionsfähig..."
-          className="w-full p-4 rounded-xl bg-slate-800/50 border border-[rgba(99,102,241,0.15)] text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 resize-none transition-all duration-200"
+          className="w-full p-4 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 resize-none transition-all duration-200"
+          style={{
+            background: 'var(--input-bg)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-primary)',
+          }}
         />
         <div className="flex justify-between mt-6">
           <button onClick={onBack} className="btn-secondary">

@@ -26,8 +26,13 @@ export default function Stepper({ current }: StepperProps) {
                     ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
                     : active
                     ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500 shadow-[0_0_16px_rgba(99,102,241,0.3)]"
-                    : "bg-slate-800/50 text-slate-500 border border-slate-700"
+                    : "border"
                 }`}
+                style={
+                  !done && !active
+                    ? { background: 'var(--input-bg)', color: 'var(--text-muted)', borderColor: 'var(--border-color)' }
+                    : undefined
+                }
               >
                 {done ? <Check className="w-4 h-4" /> : s.num}
               </div>
@@ -36,9 +41,16 @@ export default function Stepper({ current }: StepperProps) {
                   done
                     ? "text-emerald-400"
                     : active
-                    ? "text-white"
-                    : "text-slate-500"
+                    ? ""
+                    : ""
                 }`}
+                style={
+                  active
+                    ? { color: 'var(--text-heading)' }
+                    : !done
+                    ? { color: 'var(--text-muted)' }
+                    : undefined
+                }
               >
                 {s.label}
               </span>
@@ -46,8 +58,9 @@ export default function Stepper({ current }: StepperProps) {
             {i < STEPS.length - 1 && (
               <div
                 className={`w-8 md:w-16 h-px transition-colors ${
-                  done ? "bg-emerald-500/40" : "bg-slate-700"
+                  done ? "bg-emerald-500/40" : ""
                 }`}
+                style={!done ? { background: 'var(--border-color)' } : undefined}
               />
             )}
           </div>

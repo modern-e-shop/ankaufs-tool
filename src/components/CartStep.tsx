@@ -1,6 +1,5 @@
 import { X, ArrowLeft, ArrowRight } from "lucide-react";
 import type { Product } from "../data/catalog";
-import { formatPrice } from "../data/catalog";
 import Stepper from "./Stepper";
 
 interface Props {
@@ -13,7 +12,6 @@ interface Props {
 
 export default function CartStep({
   cart,
-  total,
   removeFromCart,
   onBack,
   onNext,
@@ -22,31 +20,35 @@ export default function CartStep({
     <div className="max-w-2xl mx-auto animate-in">
       <Stepper current={2} />
       <div className="glass-card p-8">
-        <h2 className="text-2xl font-bold text-white mb-6">Warenkorb</h2>
+        <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-heading)' }}>Warenkorb</h2>
         {cart.length === 0 ? (
-          <p className="text-slate-500 text-center py-8">
+          <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>
             Keine Produkte im Warenkorb.
           </p>
         ) : (
           <>
+            <p className="text-sm mb-4 font-medium" style={{ color: 'var(--text-secondary)' }}>
+              {cart.length} Produkt{cart.length !== 1 ? "e" : ""} ausgewählt
+            </p>
             <div className="space-y-3 mb-6">
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between py-3 px-4 rounded-xl bg-slate-800/30 border border-slate-700/30 transition-all duration-200 hover:border-slate-600/50"
+                  className="flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-200"
+                  style={{
+                    background: 'var(--input-bg)',
+                    border: '1px solid var(--border-color-light)',
+                  }}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <span className="text-xl">
                       {item.id.startsWith("sky") ? "🎮" : "📷"}
                     </span>
-                    <span className="text-white font-medium truncate">
+                    <span className="font-medium truncate" style={{ color: 'var(--text-heading)' }}>
                       {item.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="price text-sm">
-                      {formatPrice(item.price)}
-                    </span>
                     <button
                       onClick={() => removeFromCart(item.id)}
                       className="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center hover:bg-red-500/20 transition-colors"
@@ -56,14 +58,6 @@ export default function CartStep({
                   </div>
                 </div>
               ))}
-            </div>
-            <div className="border-t border-slate-700/50 pt-4">
-              <div className="flex justify-between items-center mb-6">
-                <span className="text-lg text-slate-300 font-medium">
-                  Gesamtbetrag
-                </span>
-                <span className="price text-3xl">{formatPrice(total)}</span>
-              </div>
             </div>
           </>
         )}

@@ -30,13 +30,13 @@ export default function PaymentStep({
     <div className="max-w-2xl mx-auto animate-in">
       <Stepper current={3} />
       <div className="glass-card p-8">
-        <h2 className="text-2xl font-bold text-white mb-6">
+        <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-heading)' }}>
           Zahlungsinformationen
         </h2>
 
         {/* Payment method */}
         <div className="mb-6">
-          <label className="text-sm text-slate-400 mb-3 block">
+          <label className="text-sm mb-3 block" style={{ color: 'var(--text-secondary)' }}>
             Zahlungsmethode
           </label>
           <div className="flex gap-4">
@@ -46,7 +46,7 @@ export default function PaymentStep({
                 className={`flex-1 glass-card-sm p-4 cursor-pointer transition-all duration-200 text-center ${
                   payment.method === m
                     ? "!border-indigo-500 !bg-indigo-500/10"
-                    : "hover:border-slate-600"
+                    : ""
                 }`}
               >
                 <input
@@ -60,7 +60,7 @@ export default function PaymentStep({
                 <span className="text-2xl block mb-1">
                   {m === "bank" ? "🏦" : "💳"}
                 </span>
-                <span className="text-sm font-medium text-white">
+                <span className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>
                   {m === "bank" ? "Banküberweisung" : "PayPal"}
                 </span>
               </label>
@@ -100,8 +100,8 @@ export default function PaymentStep({
         )}
 
         {/* Seller info */}
-        <div className="border-t border-slate-700/50 pt-6 space-y-4 mb-6">
-          <h3 className="text-white font-semibold">Ihre Kontaktdaten</h3>
+        <div className="pt-6 space-y-4 mb-6" style={{ borderTop: '1px solid var(--border-color)' }}>
+          <h3 className="font-semibold" style={{ color: 'var(--text-heading)' }}>Ihre Kontaktdaten</h3>
           <InputField
             label="Name *"
             value={payment.sellerName}
@@ -151,13 +151,18 @@ function InputField({
 }) {
   return (
     <div>
-      <label className="text-sm text-slate-400 mb-1.5 block">{label}</label>
+      <label className="text-sm mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-[rgba(99,102,241,0.15)] text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-200"
+        className="w-full px-4 py-3 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-200"
+        style={{
+          background: 'var(--input-bg)',
+          border: '1px solid var(--border-color)',
+          color: 'var(--text-primary)',
+        }}
       />
     </div>
   );
