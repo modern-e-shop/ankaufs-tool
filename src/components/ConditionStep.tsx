@@ -17,7 +17,7 @@ export default function ConditionStep({
     <div className="max-w-2xl mx-auto animate-in">
       <div className="glass-card p-8">
         <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-heading)' }}>
-          Zustandsbeschreibung
+          Beschreibung
         </h2>
         <p className="mb-6 text-sm" style={{ color: 'var(--text-secondary)' }}>
           Optional — beschreiben Sie den Zustand Ihrer Produkte.

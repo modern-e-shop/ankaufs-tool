@@ -141,7 +141,7 @@ export default function AdminOrderDetail() {
           {/* Description */}
           {order.description && (
             <div className="glass-card p-6">
-              <h2 className="text-lg font-semibold text-white mb-3">Zustandsbeschreibung</h2>
+              <h2 className="text-lg font-semibold text-white mb-3">Beschreibung</h2>
               <p className="text-sm text-slate-300 whitespace-pre-wrap">{order.description}</p>
             </div>
           )}
